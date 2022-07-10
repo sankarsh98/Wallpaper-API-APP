@@ -33,6 +33,10 @@ public class UrlController {
     public void deleteUrl(@PathVariable String term){
         urlService.deleteUrl(term);
     }
-    
+
+    @RequestMapping("/terms/{term}/urls/random/")
+    public URL getRandomUrl(@PathVariable String term){
+        return urlService.getRandomUrl(term);
+    }
     
 }
