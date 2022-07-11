@@ -11,7 +11,7 @@ import com.wallpaper.api.term.Term;
 
 public interface UrlRepository extends JpaRepository<URL,Integer>{
 
-    @Query(nativeQuery = true,value = "select * from URL where term_id = ?1")
+    @Query(nativeQuery = true,value = "select * from url where term_id = ?1")
     List<URL> getAllByTermId(int termId);
 
     @Transactional
