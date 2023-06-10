@@ -26,17 +26,25 @@ public class UrlService {
         return null;
     }
 
-    public void addUrl(URL url, String term) {
+    public void addUrl(String url, String term) {
+
+        URL urlObj = new URL();
+
+
+        //breaking url string to url_id and ixid
+        urlObj.setUrlId(url.substring(36,url.indexOf('?')));
+        urlObj.setIxid(url.substring(url.indexOf("ixid")+5,url.indexOf("&ixlib=rb-1.2.1&q=80&w=1080")));
+        urlObj.setUrl(url.substring(8));
 
         if(termService.existsByTerm(term)){
             int id = termService.getIdByTerm(term);
-            url.setTerm(new Term(id,""));
-            urlRepository.save(url);
+            urlObj.setTerm(new Term(id,""));
+            urlRepository.save(urlObj);
         }else{
             termService.addTerm(new Term(1,term));
             int id = termService.getIdByTerm(term);
-            url.setTerm(new Term(id,""));
-            urlRepository.save(url); 
+            urlObj.setTerm(new Term(id,""));
+            urlRepository.save(urlObj); 
         }
         
     }

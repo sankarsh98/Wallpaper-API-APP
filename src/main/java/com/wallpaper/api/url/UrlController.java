@@ -25,7 +25,7 @@ public class UrlController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/terms/{term}/urls/")
-    public void addUrl(@RequestBody URL url,@PathVariable String term){
+    public void addUrl(@RequestBody String url,@PathVariable String term){
         urlService.addUrl(url,term);
     }
 

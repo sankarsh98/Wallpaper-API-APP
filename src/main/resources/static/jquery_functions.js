@@ -1,7 +1,6 @@
 
 // let submitBtn = document.getElementById("submit-button");
 
-
 // submitBtn.addEventListener("click", submitted);
 
 function selection() {
@@ -90,6 +89,21 @@ function selection() {
     xhr.send();
 }
 
+function save_image(x) {
+
+    
+    x.classList.toggle("bi-heart-fill");
+    x.classList.toggle("bi-heart");
+
+   let heart_state = document.getElementById("heart").getAttribute("class");
+   if (heart_state=="bi-heart-fill"){
+        //call an api to save this photo
+        
+   }else{
+        //call an api to unsave this photo
+   }
+
+}
 
 function html_generator(url) {
     let response = document.getElementById("response");
@@ -98,17 +112,23 @@ function html_generator(url) {
     let download_button_form = document.getElementById("download-button-form");
     let response_image = document.getElementById("response-image");
 
+    let heart_icon = document.getElementById("heart");
+
     str = '<img src="' + url + '" class=".img-fluid">';
     download = '<form method="get" action="' + url + '"><button type="submit" id = "Download" class="btn btn-primary">Download!</button></form>';
     download2 = '<a href="' + url + '" download="wallpaper.jpg" rel="noopener noreferrer" target="_blank">Download</a>';
     download3 = '<form method="get" action="title-image.png"><button type="submit">Download!</button></form>';
     console.log(str);
     // download_button.innerHTML = download;
-    download_button_form.setAttribute("style","display:block;");
-    download_button_form.setAttribute("action",url);
+    download_button_form.setAttribute("style", "display:block;");
+    download_button_form.setAttribute("action", url);
     // response.innerHTML = str;
-    response_image.setAttribute("style","display:block;");
-    response_image.setAttribute("src",url);
+    response_image.setAttribute("style", "display:block;");
+    response_image.setAttribute("src", url);
+
+    heart_icon.setAttribute("style", "display:block;");
+    heart_icon.setAttribute("class","bi-heart");
+
 }
 
 function search_handler() {

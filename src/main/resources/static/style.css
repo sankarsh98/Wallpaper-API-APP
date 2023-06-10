@@ -78,3 +78,7 @@ img {
     -ms-transform: translateY(-50%);
     transform: translateY(-50%);
   }
+
+#heart {
+    color: #fb3958;
+}

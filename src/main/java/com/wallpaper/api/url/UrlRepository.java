@@ -13,6 +13,7 @@ public interface UrlRepository extends JpaRepository<URL,Integer>{
 
     @Query(nativeQuery = true,value = "select * from URL where term_id = ?1")
     List<URL> getAllByTermId(int termId);
+    
 
     @Transactional
     void deleteAllByTermId(int termId);
@@ -20,6 +21,9 @@ public interface UrlRepository extends JpaRepository<URL,Integer>{
 
     @Transactional
     void deleteAllByTermTerm(String term);
+
+
+    // Integer getIdByUrlid(String url_id);
 
    
 }
