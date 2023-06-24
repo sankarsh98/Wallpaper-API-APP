@@ -41,6 +41,10 @@ public class URL {
         
     }
 
+    public URL(int id){
+        this.id=id;
+    }
+
     public URL(int id, String urlId, String ixid, Term term) {
         this.id = id;
         this.urlId = urlId;

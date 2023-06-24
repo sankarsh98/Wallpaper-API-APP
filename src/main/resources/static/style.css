@@ -42,13 +42,13 @@ img {
     margin-left: auto;
     margin-right: auto;
     border-style: solid;
-    border-radius: 8px;
-    border-color: rgb(75, 16, 130);
+    border-radius: 2px;
+    border-color: rgb(58, 168, 247);
 }
 
 #response {
     margin: 20px;
-    height: 800px;
+    height: 400px;
     
 }
 
@@ -57,6 +57,12 @@ img {
     
 }
 
+.favsimgs{
+    height: 80%;
+    width: 100%;
+    object-fit: cover;
+    border : none;
+}
 
 #search-string {
     padding: 6px;

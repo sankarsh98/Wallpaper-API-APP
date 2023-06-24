@@ -34,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/signup").permitAll()
                 .antMatchers("/terms").hasRole("USER")
+                .antMatchers("/favorites").hasAnyRole("USER", "ADMIN")
                 .antMatchers("/index").hasAnyRole("USER", "ADMIN")
                 .and()
                 .cors()
