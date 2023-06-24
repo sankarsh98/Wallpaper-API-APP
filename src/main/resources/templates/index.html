@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org/">
+
+<head>
+    <title>Wallpaper Downloader</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script src="action.js"></script> -->
+    <script src="jquery_functions.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
+        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <div id="title" class="container">
+        <!-- <h1>Wallpaper Downloader</h1> -->
+        <nav class="navbar navbar-light ">
+            <h1>Wallpaper Downloader</h1>
+            <!-- <h1></h1><span class="navbar-brand mb-0 h1">Navbar</span> -->
+            <h4 th:text="${user}"></h4>
+            <form class="form-inline my-2 my-lg-0" action="/favorites">
+                <button class="btn btn-outline-danger my-2 my-sm-0">Favorites</button>
+            </form>
+        
+            <form class="form-inline my-2 my-lg-0" action="/logout">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+              </form>
+          </nav>
+    </div>
+    <hr>
+    <div id="dropdown" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col">
+                <form action="index.html" method="get" id="category-form">
+                    <!-- <label for="category">Choose a category</label> -->
+                    <select name="Category" class="form-select form-select-lg mb-3" id="category">
+                        <option value="default" id="dropdown-value">--Choose a category--</option>
+                        <option value="animals">Animals</option>
+                        <option value="nature">Nature</option>
+                        <option value="space">Space</option>
+                        <option value="ganesh">Ganesh</option>
+                        <option value="sports">Sports</option>
+                        <option value="random">Random</option>
+                    </select>
+            </div>
+            <div id="submit" class="col">
+                <button type="button" id="submit-button" class="btn btn-primary" onclick="selection()">Submit</button>
+            </div>
+            </form>
+        </div>
+    </div>
+    <div id="download-button" style="align-items:center" class="container">
+        <div class="row">
+            <div class="col"></div>
+            <div class="col-2"></div>
+            <div class="col">
+                <form method="get" action="" style="display:none" id="download-button-form">
+                    <button type="submit" id="Download" class="btn btn-primary btn-lg ">Download!</button>
+                </form>
+            </div>
+            <div class="col">
+                <h1><i onclick="save_image(this)" id="heart" class="bi-heart" style="display:none"></i></h1>
+            </div>
+        </div>
+    </div>
+    <div id="response">
+        <img src="" id="response-image" class=".img-fluid" style="display: none">
+    </div>
+
+
+</body>
+
+</html>

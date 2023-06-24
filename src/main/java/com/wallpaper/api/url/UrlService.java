@@ -2,6 +2,8 @@ package com.wallpaper.api.url;
 
 import java.util.List;
 import java.util.Random;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,17 +28,32 @@ public class UrlService {
         return null;
     }
 
-    public void addUrl(URL url, String term) {
+    public URL addUrl(String url, String term) {
+
+        URL urlObj = new URL();
+
+        //new code for breaking url string to url_id and ixid
+        String url_string = url.substring(8, url.length()-2);
+        Pattern pattern = Pattern.compile("(photo-.*)\\?.*ixid=(.*)\\&ixlib");
+        Matcher matcher = pattern.matcher(url_string);
+        if (matcher.find()) {
+            String photoName = matcher.group(1);
+            String ixid = matcher.group(2);
+            urlObj.setUrlId(photoName);
+            urlObj.setIxid(ixid);
+            urlObj.setUrl(url_string);
+        }
+        //-------------------------------
 
         if(termService.existsByTerm(term)){
             int id = termService.getIdByTerm(term);
-            url.setTerm(new Term(id,""));
-            urlRepository.save(url);
+            urlObj.setTerm(new Term(id,""));
+            return urlRepository.save(urlObj);
         }else{
             termService.addTerm(new Term(1,term));
             int id = termService.getIdByTerm(term);
-            url.setTerm(new Term(id,""));
-            urlRepository.save(url); 
+            urlObj.setTerm(new Term(id,""));
+            return urlRepository.save(urlObj); 
         }
         
     }

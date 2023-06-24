@@ -1,21 +1,38 @@
 package com.wallpaper.api.url;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import com.wallpaper.api.term.Term;
 
 @Entity
+@Table(name = "URL")
 public class URL {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String url;
+    @Column(name = "url_id")
+    private String urlId;
     
+    private String url;
+
+    @Column(name = "ixid")
+    private String ixid;
+    
+    public String getIxid() {
+        return ixid;
+    }
+
+    public void setIxid(String ixid) {
+        this.ixid = ixid;
+    }
+
     @ManyToOne
     private Term term;
 
@@ -24,9 +41,14 @@ public class URL {
         
     }
 
-    public URL(int id, String url, Term term) {
+    public URL(int id){
+        this.id=id;
+    }
+
+    public URL(int id, String urlId, String ixid, Term term) {
         this.id = id;
-        this.url = url;
+        this.urlId = urlId;
+        this.ixid = ixid;
         this.term = new Term(term.getId(),"");
     }
 
@@ -38,12 +60,12 @@ public class URL {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrlId() {
+        return urlId;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrlId(String urlId) {
+        this.urlId = urlId;
     }
 
     public Term getTerm() {
@@ -54,5 +76,12 @@ public class URL {
         this.term = term;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
     
 }
