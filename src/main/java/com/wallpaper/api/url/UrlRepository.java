@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +26,9 @@ public interface UrlRepository extends JpaRepository<URL,Integer>{
 
     @Transactional
     void deleteAllByTermTerm(String term);
+
+    @Query(nativeQuery = true,value = "select * from URL where term_id = ?1")
+    Page<URL> getAllByTermIdPaged(int termId,Pageable pageable);
 
 
     // Integer getIdByUrlid(String url_id);

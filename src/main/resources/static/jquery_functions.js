@@ -35,10 +35,7 @@ function selection() {
 
             var saveUrl = "http://localhost:8081/terms/" + category + "/urls/";
 
-
             // Getting the ul element
-
-
             regUrl = obj.urls.regular;
             var saveJsonString = {
                 "url": regUrl
@@ -51,27 +48,7 @@ function selection() {
                 sessionStorage.setItem("currentUrlId",Number(xhrSaveURL.responseText));
                 html_generator(obj.urls.regular,sessionStorage.getItem("currentUrlId"));
 
-                if(sessionStorage.getItem("userLoggedIn") === null){
-                    // if(true){
-                        xhrGetUserId.open("GET","http://localhost:8081/userid",true);
-
-                        xhrGetUserId.onload = function () {
-                            sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
-                            console.log(xhrGetUserId.responseText);
-                        }
-                        xhrGetUserId.send();
-                        
-                    }else{
-                        console.log(sessionStorage.getItem("userLoggedIn"));
-                    }
             }
-            // str = '<img src="' + obj.urls.regular + '">';
-            // download = '<form method="get" action="' + obj.urls.regular + '"><button type="submit">Download!</button></form>';
-            // download2 = '<a href="'+obj.urls.regular+'" download="wallpaper.jpg" rel="noopener noreferrer" target="_blank">Download</a>';
-            // download3 = '<form method="get" action="title-image.png"><button type="submit">Download!</button></form>';
-            // console.log(str);
-            // download_button.innerHTML = download2;
-            // response.innerHTML = str;
             xhrSaveURL.send(JSON.stringify(saveJsonString));
             
             html_generator(obj.urls.regular);
@@ -85,29 +62,8 @@ function selection() {
                 if (this.status === 200) {
 
                     randomResponse = JSON.parse(this.responseText);
-
-                    // str = '<img src="' + randomResponse.url + '">';
-                    // download = '<form method="get" action="' + randomResponse.url + '"><button type="submit">Download!</button></form>';
-
-
-                    // console.log(str);
-                    // response.innerHTML = str;
-                    // download_button.innerHTML = download;
                     console.log(randomResponse.id);
                     sessionStorage.setItem("currentUrlId",randomResponse.id);
-                    if(sessionStorage.getItem("userLoggedIn") === null){
-                    // if(true){
-                        xhrGetUserId.open("GET","http://localhost:8081/userid",true);
-
-                        xhrGetUserId.onload = function () {
-                            sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
-                            console.log(xhrGetUserId.responseText);
-                        }
-                        xhrGetUserId.send();
-                        
-                    }else{
-                        console.log(sessionStorage.getItem("userLoggedIn"));
-                    }
                     html_generator(randomResponse.url,randomResponse.id);
                     
                 }
@@ -182,14 +138,14 @@ function html_generator(url,id) {
 
     let download_button_form = document.getElementById("download-button-form");
     let response_image = document.getElementById("response-image");
-
+    let next_button = document.getElementById("next-button");
     let heart_icon = document.getElementById("heart");
 
-    str = '<img src="' + url + '" class=".img-fluid" >';
-    download = '<form method="get" action="' + url + '"><button type="submit" id = "Download" class="btn btn-primary">Download!</button></form>';
-    download2 = '<a href="' + url + '" download="wallpaper.jpg" rel="noopener noreferrer" target="_blank">Download</a>';
-    download3 = '<form method="get" action="title-image.png"><button type="submit">Download!</button></form>';
-    console.log(str);
+    // str = '<img src="' + url + '" class=".img-fluid" > <button type="button" id="submit-button" class="btn btn-primary" onclick="selection()">Next</button>';
+    // download = '<form method="get" action="' + url + '"><button type="submit" id = "Download" class="btn btn-primary">Download!</button></form>';
+    // download2 = '<a href="' + url + '" download="wallpaper.jpg" rel="noopener noreferrer" target="_blank">Download</a>';
+    // download3 = '<form method="get" action="title-image.png"><button type="submit">Download!</button></form>';
+    // console.log(str);
     // download_button.innerHTML = download;
     download_button_form.setAttribute("style", "display:block;");
     download_button_form.setAttribute("action", url);
@@ -198,49 +154,162 @@ function html_generator(url,id) {
     response_image.setAttribute("src", url);
     response_image.setAttribute("data-url-id",id);
 
-    heart_icon.setAttribute("style", "display:block;");
+    next_button.setAttribute("style", "display:block;");
+    next_button.setAttribute("onclick", "selection()");
+
+    heart_icon.setAttribute("style", "display:inline;");
     heart_icon.setAttribute("class","bi-heart");
     heart_icon.setAttribute("data-url-id",id);
 
 
 }
 
-function favorites() {
+function favorites(page_number) {
 
     let favorites = document.getElementById("favs");
 
-
+    const xhrGetFavsPageInfo = new XMLHttpRequest();
     const xhrGetFavs = new XMLHttpRequest();
 
-    var url = "http://localhost:8081/favs/"+sessionStorage.getItem("userLoggedIn");
-    xhrGetFavs.open("GET", url, true);
+    var pageInfoUrl = "http://localhost:8081/favs/pageInfo?userId="+sessionStorage.getItem("userLoggedIn");
+
+    xhrGetFavsPageInfo.open("GET",pageInfoUrl,true);
+
+    xhrGetFavsPageInfo.onload = function () {
+
+        pageInfo = JSON.parse(xhrGetFavsPageInfo.responseText);
+        var total_pages = pageInfo.total_pages;
+        var page_size = pageInfo.page_size;
+        var total_elements = pageInfo.total_elements;
+
+        // var pageUrl = "http://localhost:8081/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
+        // xhrGetFavs.open("GET", pageUrl, true);
+        // var str="";
+        // var len=0;
+        // xhrGetFavs.onload = function () {
+        //     obj = JSON.parse(xhrGetFavs.responseText).content;
+        //     len = obj.length;
+        //     for (let i = 0; i < len; i++) {
+
+        //         str = str + '<div class="row">';
+
+        //         str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+        //         i++;
+        //         if (i<len){
+        //             str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+        //         }else{
+        //             str = str + '</div>';
+        //             break;
+        //         }
+        //         i++;
+        //         if (i<len){
+        //             str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';    
+        //         }else{
+        //             str = str + '</div>';
+        //             break;
+        //         }
+        //         // str = str + '<img src="' + obj[i].url + '" class=".img-fluid">' + "\n";
+
+        //         str = str + '</div>';
+        //     }
+        //     str = str + '</div>';
+
+        //     str = str + `<nav aria-label="Page navigation example">
+        //     <ul class="pagination">
+        //       <li class="page-item"><a class="page-link" href="#">Previous</a></li>`;
+            
+        //     for ( let page = 0 ; page<total_pages;page++){
+        //         str = str + '<li class="page-item"><a class="page-link" href="#">'+(page+1)+'</a></li>';
+        //     }
+            
+        //     str = str + `<li class="page-item"><a class="page-link" href="#">Next</a></li></ul>
+        //   </nav>`;
+        //     console.log(str);
+        //     // download_button.innerHTML = download;
+        
+        //     favorites.innerHTML = str;
+        // }
+        // xhrGetFavs.send();
+
+        favorites_generator(sessionStorage.getItem("userLoggedIn"),page_number,total_pages);
+        
+    }
+
+    xhrGetFavsPageInfo.send();
+
+    // var url = "http://localhost:8081/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
+    // xhrGetFavs.open("GET", url, true);
+    // var str="";
+    // var len=0;
+    // // str = '<img src="' + url + '" class=".img-fluid">';
+    // // When response is ready
+    // xhrGetFavs.onload = function () {
+
+    //     obj = JSON.parse(xhrGetFavs.responseText).content;
+    //     len = obj.length;
+    //     for (let i = 0; i < len; i++) {
+
+    //         str = str + '<div class="row">';
+
+    //         str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+    //         i++;
+    //         if (i<len){
+    //             str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+    //         }else{
+    //             str = str + '</div>';
+    //             break;
+    //         }
+    //         i++;
+    //         if (i<len){
+    //             str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';    
+    //         }else{
+    //             str = str + '</div>';
+    //             break;
+    //         }
+    //         // str = str + '<img src="' + obj[i].url + '" class=".img-fluid">' + "\n";
+
+    //         str = str + '</div>';
+    //     }
+    //     str = str + '</div>';
+
+    //     console.log(str);
+    // // download_button.innerHTML = download;
+    
+    // favorites.innerHTML = str;
+    // }
+
+    // xhrGetFavs.send();
+
+}
+
+function favorites_generator(user_id,page_number,total_pages){
+
+    let favorites = document.getElementById("favs");
+    const xhrGetFavs = new XMLHttpRequest();
+    var pageUrl = "http://localhost:8081/favs?userId="+user_id+"&pageNumber="+page_number;
+    xhrGetFavs.open("GET", pageUrl, true);
     var str="";
     var len=0;
-    // str = '<img src="' + url + '" class=".img-fluid">';
-    // When response is ready
     xhrGetFavs.onload = function () {
-
-        
-
-        obj = JSON.parse(xhrGetFavs.responseText);
+        obj = JSON.parse(xhrGetFavs.responseText).content;
         len = obj.length;
         for (let i = 0; i < len; i++) {
 
             str = str + '<div class="row">';
 
-            str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+            str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid favclass" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:inline" data-url-id='+obj[i].id+'></i></div>';
             i++;
             if (i<len){
-                str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';
+                str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid favclass" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:inline" data-url-id='+obj[i].id+'></i></div>';
             }else{
-                str = str + '</div>';
+                str = str + '<div class="col-sm favsimgs"></div><div class="col-sm favsimgs"></div></div>';
                 break;
             }
             i++;
             if (i<len){
-                str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:block" data-url-id='+obj[i].id+'></i></div>';    
+                str = str + '<div class="col-sm favsimgs"><img src="' + obj[i].url + '" class=".img-fluid favclass" data-url-id='+obj[i].id+'><i onclick="save_image(this)" id="heart" class="bi-heart-fill" style="display:inline" data-url-id='+obj[i].id+'></i></div>';    
             }else{
-                str = str + '</div>';
+                str = str + '<div class="col-sm favsimgs"></div></div>';
                 break;
             }
             // str = str + '<img src="' + obj[i].url + '" class=".img-fluid">' + "\n";
@@ -249,14 +318,55 @@ function favorites() {
         }
         str = str + '</div>';
 
-        console.log(str);
-    // download_button.innerHTML = download;
+        str = str + `<div class="container"><div class="row"><div class="col-sm"></div><div class="col-sm"><nav aria-label="Page navigation example">
+        <ul class="pagination">`;
+
+        var sessionPageNumber = Number(sessionStorage.getItem("sessionPageNumber"));
+        if(sessionPageNumber<1){
+            str = str + '<li class="page-item"><button class="page-link" onclick="favorites('+sessionPageNumber+')">Previous</a></li>';
+        }else{
+            str = str + '<li class="page-item"><button class="page-link" onclick="favorites('+(sessionPageNumber-1)+')">Previous</a></li>';
+        }
+        
+        for ( let page = 0 ; page<total_pages;page++){
+            str = str + '<li class="page-item"><button class="page-link" onclick="favorites('+page+')" >'+(page+1)+'</button></li>';
+        }
+        
+        if(sessionPageNumber==total_pages-1){
+            str = str + '<li class="page-item"><button class="page-link" onclick="favorites('+sessionPageNumber+')">Next</a></li>';
+        }else{
+            str = str + '<li class="page-item"><button class="page-link" onclick="favorites('+(sessionPageNumber+1)+')">Next</a></li>';
+        }
+        str = str + "</nav></div><div class='col-sm'></div></div></div>";
+        // console.log(str);
+        // download_button.innerHTML = download;
     
-    favorites.innerHTML = str;
+        favorites.innerHTML = str;
+
+        sessionStorage.setItem("sessionPageNumber",page_number);
+        console.log(sessionStorage.getItem("sessionPageNumber"));
     }
-
     xhrGetFavs.send();
+}
 
+function login(){
+
+    const xhrGetUserId = new XMLHttpRequest();
+
+    if(sessionStorage.getItem("userLoggedIn") === null){
+        // if(true){
+            xhrGetUserId.open("GET","http://localhost:8081/userid",true);
+
+            xhrGetUserId.onload = function () {
+                sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
+                console.log(xhrGetUserId.responseText);
+                console.log(sessionStorage.getItem("userLoggedIn"));
+            }
+            xhrGetUserId.send();
+            
+        }else{
+            console.log(sessionStorage.getItem("userLoggedIn"));
+        }
 }
 
 function search_handler() {

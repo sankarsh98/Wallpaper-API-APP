@@ -2,6 +2,8 @@ package com.wallpaper.api.favs;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +18,7 @@ public interface FavsRepository extends JpaRepository<Favs,Integer>{
 
     @Query(nativeQuery = true,value = "select url_id from favs where user_id = ?1")
     List<Integer> getFavsByUserId(int user_id);
+
+    @Query(nativeQuery = true,value = "select url_id from favs where user_id = ?1 order by url_id asc")
+    Page<Integer> getFavsByUserIdPaged(int user_id,Pageable pageable);
 }

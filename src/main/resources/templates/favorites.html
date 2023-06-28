@@ -2,9 +2,9 @@
 <html xmlns:th="https://www.thymeleaf.org/">
 
 <head>
-    <title>Wallpaper Downloader</title>
+    <title>Favorites</title>
     <link rel="stylesheet" href="style.css">
-
+    <link rel="icon" type="image/x-icon" href="pageIcon.png">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <!-- <script src="action.js"></script> -->
     <script src="jquery_functions.js"></script>
@@ -16,26 +16,43 @@
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy"
         crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@500&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
     <div id="title" class="container">
         <!-- <h1>Wallpaper Downloader</h1> -->
+        <div class="row">
         <nav class="navbar navbar-light ">
+            
+            <div class="col col-lg-4">
             <form action="/index">
-                <button class="btn " type = "submit"><h1>Wallpaper Downloader</h1></form></button>
-            <h3>Favorites</h3>
+                <button class="btn" id = "wallgetterbutton" type = "submit"><img src="logo.png" id="logo"></form></button>
+            </div>
+            <div class="col"></div>
+            <div class="col col-lg-">
+                <h1 class="display-3" id="favorites_header">Favorites</h1>
+            </div>
+            <div class="col"></div>
+            <div class="col"></div>
+            <div class="col"></div>
+
             <!-- <h1></h1><span class="navbar-brand mb-0 h1">Navbar</span> -->
             <!-- <h4 th:text="${user}"></h4> -->
-            <button class="btn btn-outline-success my-2 my-sm-0" onclick="favorites()">see</button>
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" onclick="favorites()">see</button> -->
 
+            <div class="col">
             <form class="form-inline my-2 my-lg-0" action="/logout">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Logout</button>
+                <button class="btn btn-danger my-2 my-sm-0" type="submit">Logout</button>
             </form>
+        </div>
+        
           </nav>
+        </div>
     </div>
-    <hr>
     <!-- <div id="dropdown" class="container">
         <div class="row">
             <div class="col"></div>
@@ -73,7 +90,7 @@
     </div> -->
     <script>
         window.onload=function(){
-            favorites();
+            favorites(0);
         };
     </script>
     <div id="favs" class = "container" onload="favorites()">

@@ -20,6 +20,7 @@
 				"username": "root",
 				"password": "S5@sankarsh"
 			}
-		]
+		],
+		"java.compile.nullAnalysis.mode": "automatic"
 	}
 }
