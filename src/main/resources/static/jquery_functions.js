@@ -33,13 +33,14 @@ function selection() {
             // Changing string data into JSON Object
             obj = JSON.parse(xhr.responseText);
 
-            var saveUrl = "http://localhost:8081/terms/" + category + "/urls/";
+            var saveUrl = "http://sankarshpallela.co:8081/terms/" + category + "/urls/";
 
             // Getting the ul element
             regUrl = obj.urls.regular;
             var saveJsonString = {
                 "url": regUrl
             };
+
             xhrSaveURL.open("POST", saveUrl, true);
             xhrSaveURL.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             
@@ -54,7 +55,7 @@ function selection() {
             html_generator(obj.urls.regular);
         } else if (xhr.status === 403) {
 
-            var randomUrl = "http://localhost:8081/terms/" + category + "/urls/random/";
+            var randomUrl = "http://sankarshpallela.co:8081/terms/" + category + "/urls/random/";
 
             xhrRandomUrl.open("GET", randomUrl, true);
 
@@ -416,7 +417,7 @@ function api_tester() {
         "url": regUrl
     };
 
-    var url = "http://localhost:8081/terms/" + term + "/urls/";
+    var url = "http://sankarshpallela.co:8081/terms/" + term + "/urls/";
 
     let response = document.getElementById("response");
 
@@ -465,7 +466,7 @@ function random_tester() {
 
     var term = document.getElementById("category").value;
 
-    var randomUrl = "http://localhost:8081/terms/" + term + "/urls/random/";
+    var randomUrl = "http://sankarshpallela.co:8081/terms/" + term + "/urls/random/";
 
     xhrRandomUrl.open("GET", randomUrl, true);
 
