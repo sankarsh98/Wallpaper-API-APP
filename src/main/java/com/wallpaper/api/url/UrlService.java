@@ -6,6 +6,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.wallpaper.api.term.Term;
@@ -63,21 +66,34 @@ public class UrlService {
     }
 
     public URL getRandomUrl(String term) {
-        if(termService.existsByTerm(term)){
+        // if(termService.existsByTerm(term)){
+
+            int page_number = 0;
+            int page_size = 1;
+
+            Pageable pageable = PageRequest.of(page_number,page_size);
             int id = termService.getIdByTerm(term);
-            List<URL> urls = urlRepository.getAllByTermId(id); 
-
-            Random rand = new Random();
-            return urls.get(rand.nextInt(urls.size()));
-
-        }else{
-            int id = termService.getIdByTerm("default"); 
-
-            Random rand = new Random();
-            List<URL> urls = urlRepository.getAllByTermId(id);
+            Page<URL> pages = urlRepository.getAllByTermIdPaged(id, pageable);
             
-            return urls.get(rand.nextInt(urls.size()));
-        }
+
+            // List<URL> urls = urlRepository.getAllByTermId(id); 
+
+            Random rand = new Random();
+            page_number = rand.nextInt((int)pages.getTotalElements());
+
+            Pageable newPageable = PageRequest.of(page_number,page_size);
+            Page<URL> newPages = urlRepository.getAllByTermIdPaged(id, newPageable);
+            
+            return newPages.getContent().get(0);
+
+        // }else{
+        //     int id = termService.getIdByTerm("default"); 
+
+        //     Random rand = new Random();
+        //     List<URL> urls = urlRepository.getAllByTermId(id);
+            
+        //     return urls.get(rand.nextInt(urls.size()));
+        // }
     }
 
 }

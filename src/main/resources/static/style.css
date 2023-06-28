@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(247, 202, 201);
+    background-color: #fefbdf !important; ;
     /* background: linear-gradient(90deg, #fcff9e 0%, #c67700 100%); */
 }
 
@@ -7,6 +7,39 @@ body {
     width: 200px;
     margin-left:auto;
     margin-right:auto;
+}
+
+option{
+    text-align: center;
+}
+#wallgetterbutton{
+    border-width: none;
+    border: none;
+    background: none;
+}
+
+#next-button{
+margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  font-size: 2em;
+}
+
+#logo{
+    height: 30%;
+    width: 40%;
+    border: none;
+    border-radius: 30px;
+    margin-left: 10px;
+    
+}
+
+#favorites_header{
+    /* font-family: 'Trebuchet MS', sans-serif; */
+    font-family: 'Noto Serif', serif;
+    color: #20287f;
 }
 
 #title {
@@ -27,14 +60,29 @@ body {
 
 } */
 
-#category {
-    /* width: 175px; */
-}
 
 button {
     align-self: center;
 }
 
+.favclass {
+    height: 250px;
+    width: 350px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: solid;
+    border-radius: 10px;
+    border-width: 1px;
+    border-color: rgb(25, 248, 9);
+    object-fit: cover;
+}
+#response-image {
+    /* margin: 20px; */
+    height: 500px;
+    width: 750px;
+    object-fit: cover;
+}
 img {
     height: fit-content;
     width: 80%;
@@ -46,15 +94,10 @@ img {
     border-color: rgb(58, 168, 247);
 }
 
-#response {
-    margin: 20px;
-    height: 400px;
-    
-}
+
 
 #download-button{
     margin: 20px;
-    
 }
 
 .favsimgs{
@@ -87,4 +130,8 @@ img {
 
 #heart {
     color: #fb3958;
+}
+
+i{
+    font-size: 1.65em;
 }
