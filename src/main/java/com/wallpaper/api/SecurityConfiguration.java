@@ -29,6 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic()
                 .and()
+        //         .requiresChannel(channel -> 
+        //   channel.anyRequest().requiresSecure())
                 .authorizeRequests()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/signup").permitAll()

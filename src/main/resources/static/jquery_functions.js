@@ -22,40 +22,40 @@ function selection() {
     let download_button = document.getElementById("download-button");
     // Open an obejct (GET/POST, PATH,
     // ASYN-TRUE/FALSE)
-    var url = "https://api.unsplash.com/photos/random?client_id=JiouuZcbhMxy8L8Oi9vgQ3oavNekX6PqqhIK-vBj5M8&query=" + category + "&orientation=landscape";
+    // var url = "https://api.unsplash.com/photos/random?client_id=JiouuZcbhMxy8L8Oi9vgQ3oavNekX6PqqhIK-vBj5M8&query=" + category + "&orientation=landscape";
 
-    xhr.open("GET", url, true);
+    // xhr.open("GET", url, true);
 
-    // When response is ready
-    xhr.onload = function () {
-        if (xhr.status === 200) {
+    // // When response is ready
+    // xhr.onload = function () {
+        // if (xhr.status === 200) {
 
-            // Changing string data into JSON Object
-            obj = JSON.parse(xhr.responseText);
+        //     // Changing string data into JSON Object
+        //     obj = JSON.parse(xhr.responseText);
 
-            var saveUrl = "http://sankarshpallela.co:8081/terms/" + category + "/urls/";
+        //     var saveUrl = "http://www.wallgetter.site/terms/" + category + "/urls/";
 
-            // Getting the ul element
-            regUrl = obj.urls.regular;
-            var saveJsonString = {
-                "url": regUrl
-            };
+        //     // Getting the ul element
+        //     regUrl = obj.urls.regular;
+        //     var saveJsonString = {
+        //         "url": regUrl
+        //     };
 
-            xhrSaveURL.open("POST", saveUrl, true);
-            xhrSaveURL.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        //     xhrSaveURL.open("POST", saveUrl, true);
+        //     xhrSaveURL.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             
-            xhrSaveURL.onload = function () {
-                console.log(xhrSaveURL.responseText);
-                sessionStorage.setItem("currentUrlId",Number(xhrSaveURL.responseText));
-                html_generator(obj.urls.regular,sessionStorage.getItem("currentUrlId"));
+        //     xhrSaveURL.onload = function () {
+        //         console.log(xhrSaveURL.responseText);
+        //         sessionStorage.setItem("currentUrlId",Number(xhrSaveURL.responseText));
+        //         html_generator(obj.urls.regular,sessionStorage.getItem("currentUrlId"));
 
-            }
-            xhrSaveURL.send(JSON.stringify(saveJsonString));
+        //     }
+        //     xhrSaveURL.send(JSON.stringify(saveJsonString));
             
-            html_generator(obj.urls.regular);
-        } else if (xhr.status === 403) {
+        //     html_generator(obj.urls.regular);
+        // } else if (xhr.status === 403) {
 
-            var randomUrl = "http://sankarshpallela.co:8081/terms/" + category + "/urls/random/";
+            var randomUrl = "http://www.wallgetter.site/terms/" + category + "/urls/random/";
 
             xhrRandomUrl.open("GET", randomUrl, true);
 
@@ -72,14 +72,14 @@ function selection() {
 
             xhrRandomUrl.send();
 
-        }
-        else {
-            console.log("File not found");
-        }
-    }
+    //     }
+    //     else {
+    //         console.log("File not found");
+    //     }
+    // }
 
-    // At last send the request
-    xhr.send();
+    // // At last send the request
+    // xhr.send();
 }
 
 function save_image(x) {
@@ -92,7 +92,7 @@ function save_image(x) {
     // x.classList.toggle("bi-heart");
 
     var urlId = x.getAttribute("data-url-id");
-    var saveFavoriteUrl = "http://localhost:8081/favs/"
+    var saveFavoriteUrl = "http://www.wallgetter.site/favs/"
 
 //    let heart_state = document.getElementById("heart").getAttribute("class");
    let heart_state = x.getAttribute("class");
@@ -172,7 +172,7 @@ function favorites(page_number) {
     const xhrGetFavsPageInfo = new XMLHttpRequest();
     const xhrGetFavs = new XMLHttpRequest();
 
-    var pageInfoUrl = "http://localhost:8081/favs/pageInfo?userId="+sessionStorage.getItem("userLoggedIn");
+    var pageInfoUrl = "http://www.wallgetter.site/favs/pageInfo?userId="+sessionStorage.getItem("userLoggedIn");
 
     xhrGetFavsPageInfo.open("GET",pageInfoUrl,true);
 
@@ -183,7 +183,7 @@ function favorites(page_number) {
         var page_size = pageInfo.page_size;
         var total_elements = pageInfo.total_elements;
 
-        // var pageUrl = "http://localhost:8081/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
+        // var pageUrl = "http://www.wallgetter.site/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
         // xhrGetFavs.open("GET", pageUrl, true);
         // var str="";
         // var len=0;
@@ -238,7 +238,7 @@ function favorites(page_number) {
 
     xhrGetFavsPageInfo.send();
 
-    // var url = "http://localhost:8081/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
+    // var url = "http://www.wallgetter.site/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
     // xhrGetFavs.open("GET", url, true);
     // var str="";
     // var len=0;
@@ -287,7 +287,7 @@ function favorites_generator(user_id,page_number,total_pages){
 
     let favorites = document.getElementById("favs");
     const xhrGetFavs = new XMLHttpRequest();
-    var pageUrl = "http://localhost:8081/favs?userId="+user_id+"&pageNumber="+page_number;
+    var pageUrl = "http://www.wallgetter.site/favs?userId="+user_id+"&pageNumber="+page_number;
     xhrGetFavs.open("GET", pageUrl, true);
     var str="";
     var len=0;
@@ -356,7 +356,7 @@ function login(){
 
     if(sessionStorage.getItem("userLoggedIn") === null){
         // if(true){
-            xhrGetUserId.open("GET","http://localhost:8081/userid",true);
+            xhrGetUserId.open("GET","http://www.wallgetter.site/userid",true);
 
             xhrGetUserId.onload = function () {
                 sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
@@ -417,7 +417,7 @@ function api_tester() {
         "url": regUrl
     };
 
-    var url = "http://sankarshpallela.co:8081/terms/" + term + "/urls/";
+    var url = "http://www.wallgetter.site/terms/" + term + "/urls/";
 
     let response = document.getElementById("response");
 
@@ -466,7 +466,7 @@ function random_tester() {
 
     var term = document.getElementById("category").value;
 
-    var randomUrl = "http://sankarshpallela.co:8081/terms/" + term + "/urls/random/";
+    var randomUrl = "http://www.wallgetter.site/terms/" + term + "/urls/random/";
 
     xhrRandomUrl.open("GET", randomUrl, true);
 

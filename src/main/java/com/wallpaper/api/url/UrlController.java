@@ -25,9 +25,9 @@ public class UrlController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/terms/{term}/urls/")
-    public int addUrl(@RequestBody String url,@PathVariable String term){
-        URL addedURL =  urlService.addUrl(url,term);
-        return addedURL.getId();
+    public void addUrl(@RequestBody String url,@PathVariable String term){
+        urlService.addUrl(url,term);
+        // addedURL.getId();
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/terms/{term}/urls/")
