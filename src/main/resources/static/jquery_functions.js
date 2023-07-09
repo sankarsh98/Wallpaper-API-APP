@@ -24,39 +24,42 @@ function selection() {
     let download_button = document.getElementById("download-button");
     // Open an obejct (GET/POST, PATH,
     // ASYN-TRUE/FALSE)
-    var url = "https://api.unsplash.com/photos/random?client_id=JiouuZcbhMxy8L8Oi9vgQ3oavNekX6PqqhIK-vBj5M8&query=" + category + "&orientation=landscape";
+    // var url = "https://api.unsplash.com/photos/random?client_id=JiouuZcbhMxy8L8Oi9vgQ3oavNekX6PqqhIK-vBj5M8&query=" + category + "&orientation=landscape";
 
-    xhr.open("GET", url, true);
+    // xhr.open("GET", url, true);
 
-    // When response is ready
-    xhr.onload = function () {
-        if (xhr.status === 200) {
+    // // When response is ready
+    // xhr.onload = function () {
+        // if (xhr.status === 200) {
 
-            // Changing string data into JSON Object
-            obj = JSON.parse(xhr.responseText);
+        //     // Changing string data into JSON Object
+        //     obj = JSON.parse(xhr.responseText);
+
 
             var saveUrl = host + "/terms/" + category + "/urls/";
 
-            // Getting the ul element
-            regUrl = obj.urls.regular;
-            var saveJsonString = {
-                "url": regUrl
-            };
-            xhrSaveURL.open("POST", saveUrl, true);
-            xhrSaveURL.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-            
-            xhrSaveURL.onload = function () {
-                console.log(xhrSaveURL.responseText);
-                sessionStorage.setItem("currentUrlId",Number(xhrSaveURL.responseText));
-                html_generator(obj.urls.regular,sessionStorage.getItem("currentUrlId"));
+        //     // Getting the ul element
+        //     regUrl = obj.urls.regular;
+        //     var saveJsonString = {
+        //         "url": regUrl
+        //     };
 
-            }
-            xhrSaveURL.send(JSON.stringify(saveJsonString));
+        //     xhrSaveURL.open("POST", saveUrl, true);
+        //     xhrSaveURL.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             
-            html_generator(obj.urls.regular);
-        } else if (xhr.status === 403) {
+        //     xhrSaveURL.onload = function () {
+        //         console.log(xhrSaveURL.responseText);
+        //         sessionStorage.setItem("currentUrlId",Number(xhrSaveURL.responseText));
+        //         html_generator(obj.urls.regular,sessionStorage.getItem("currentUrlId"));
 
-            var randomUrl = host + "/terms/" + category + "/urls/random/";
+        //     }
+        //     xhrSaveURL.send(JSON.stringify(saveJsonString));
+            
+        //     html_generator(obj.urls.regular);
+        // } else if (xhr.status === 403) {
+
+
+            var randomUrl = "http://www.wallgetter.site/terms/" + category + "/urls/random/";
 
             xhrRandomUrl.open("GET", randomUrl, true);
 
@@ -73,14 +76,14 @@ function selection() {
 
             xhrRandomUrl.send();
 
-        }
-        else {
-            console.log("File not found");
-        }
-    }
+    //     }
+    //     else {
+    //         console.log("File not found");
+    //     }
+    // }
 
-    // At last send the request
-    xhr.send();
+    // // At last send the request
+    // xhr.send();
 }
 
 function save_image(x) {
@@ -185,6 +188,7 @@ function favorites(page_number) {
         var total_elements = pageInfo.total_elements;
 
         // var pageUrl = host + "/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
+
         // xhrGetFavs.open("GET", pageUrl, true);
         // var str="";
         // var len=0;
@@ -240,6 +244,7 @@ function favorites(page_number) {
     xhrGetFavsPageInfo.send();
 
     // var url = host + "/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
+
     // xhrGetFavs.open("GET", url, true);
     // var str="";
     // var len=0;
@@ -289,6 +294,7 @@ function favorites_generator(user_id,page_number,total_pages){
     let favorites = document.getElementById("favs");
     const xhrGetFavs = new XMLHttpRequest();
     var pageUrl = host + "/favs?userId="+user_id+"&pageNumber="+page_number;
+
     xhrGetFavs.open("GET", pageUrl, true);
     var str="";
     var len=0;
@@ -359,6 +365,7 @@ function login(){
         // if(true){
             xhrGetUserId.open("GET",host + "/userid",true);
 
+
             xhrGetUserId.onload = function () {
                 sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
                 console.log(xhrGetUserId.responseText);
@@ -419,6 +426,7 @@ function api_tester() {
     };
 
     var url = host + "/terms/" + term + "/urls/";
+
 
     let response = document.getElementById("response");
 

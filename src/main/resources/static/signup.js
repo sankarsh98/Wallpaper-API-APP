@@ -11,6 +11,7 @@ function signup() {
 
     var signup_url = host  + "/signup/";
 
+
     const xhr = new XMLHttpRequest();
 
     xhr.open("POST", signup_url, true);
@@ -33,6 +34,7 @@ function signup() {
                 error.innerHTML = "<p>" + response.message + "</p>";
             }else{
                 window.location.href = host + "/login";
+
             }
         } else {
 

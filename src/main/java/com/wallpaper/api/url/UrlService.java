@@ -31,7 +31,7 @@ public class UrlService {
         return null;
     }
 
-    public URL addUrl(String url, String term) {
+    public void addUrl(String url, String term) {
 
         URL urlObj = new URL();
 
@@ -48,16 +48,17 @@ public class UrlService {
         }
         //-------------------------------
 
-        if(termService.existsByTerm(term)){
+        // if(termService.existsByTerm(term)){
             int id = termService.getIdByTerm(term);
             urlObj.setTerm(new Term(id,""));
-            return urlRepository.save(urlObj);
-        }else{
-            termService.addTerm(new Term(1,term));
-            int id = termService.getIdByTerm(term);
-            urlObj.setTerm(new Term(id,""));
-            return urlRepository.save(urlObj); 
-        }
+            urlRepository.addUrl(urlObj.getUrlId(),urlObj.getIxid(),urlObj.getUrl(),urlObj.getTerm().getId());
+            // return urlRepository.save(urlObj).getId();
+        // }else{
+        //     termService.addTerm(new Term(1,term));
+        //     int id = termService.getIdByTerm(term);
+        //     urlObj.setTerm(new Term(id,""));
+        //     return urlRepository.addUrl(urlObj); 
+        // }
         
     }
 
