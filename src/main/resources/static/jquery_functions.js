@@ -3,6 +3,8 @@
 
 // submitBtn.addEventListener("click", submitted);
 
+host = "http://localhost:8081";
+
 function selection() {
 
     // Instantiate an new XHR Object
@@ -33,7 +35,8 @@ function selection() {
         //     // Changing string data into JSON Object
         //     obj = JSON.parse(xhr.responseText);
 
-        //     var saveUrl = "http://www.wallgetter.site/terms/" + category + "/urls/";
+
+            var saveUrl = host + "/terms/" + category + "/urls/";
 
         //     // Getting the ul element
         //     regUrl = obj.urls.regular;
@@ -54,6 +57,7 @@ function selection() {
             
         //     html_generator(obj.urls.regular);
         // } else if (xhr.status === 403) {
+
 
             var randomUrl = "http://www.wallgetter.site/terms/" + category + "/urls/random/";
 
@@ -92,7 +96,7 @@ function save_image(x) {
     // x.classList.toggle("bi-heart");
 
     var urlId = x.getAttribute("data-url-id");
-    var saveFavoriteUrl = "http://www.wallgetter.site/favs/"
+    var saveFavoriteUrl = host + "/favs/"
 
 //    let heart_state = document.getElementById("heart").getAttribute("class");
    let heart_state = x.getAttribute("class");
@@ -172,7 +176,7 @@ function favorites(page_number) {
     const xhrGetFavsPageInfo = new XMLHttpRequest();
     const xhrGetFavs = new XMLHttpRequest();
 
-    var pageInfoUrl = "http://www.wallgetter.site/favs/pageInfo?userId="+sessionStorage.getItem("userLoggedIn");
+    var pageInfoUrl = host + "/favs/pageInfo?userId="+sessionStorage.getItem("userLoggedIn");
 
     xhrGetFavsPageInfo.open("GET",pageInfoUrl,true);
 
@@ -183,7 +187,8 @@ function favorites(page_number) {
         var page_size = pageInfo.page_size;
         var total_elements = pageInfo.total_elements;
 
-        // var pageUrl = "http://www.wallgetter.site/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
+        // var pageUrl = host + "/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber="+0;
+
         // xhrGetFavs.open("GET", pageUrl, true);
         // var str="";
         // var len=0;
@@ -238,7 +243,8 @@ function favorites(page_number) {
 
     xhrGetFavsPageInfo.send();
 
-    // var url = "http://www.wallgetter.site/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
+    // var url = host + "/favs?userId="+sessionStorage.getItem("userLoggedIn")+"&pageNumber=0";
+
     // xhrGetFavs.open("GET", url, true);
     // var str="";
     // var len=0;
@@ -287,7 +293,8 @@ function favorites_generator(user_id,page_number,total_pages){
 
     let favorites = document.getElementById("favs");
     const xhrGetFavs = new XMLHttpRequest();
-    var pageUrl = "http://www.wallgetter.site/favs?userId="+user_id+"&pageNumber="+page_number;
+    var pageUrl = host + "/favs?userId="+user_id+"&pageNumber="+page_number;
+
     xhrGetFavs.open("GET", pageUrl, true);
     var str="";
     var len=0;
@@ -356,7 +363,8 @@ function login(){
 
     if(sessionStorage.getItem("userLoggedIn") === null){
         // if(true){
-            xhrGetUserId.open("GET","http://www.wallgetter.site/userid",true);
+            xhrGetUserId.open("GET",host + "/userid",true);
+
 
             xhrGetUserId.onload = function () {
                 sessionStorage.setItem("userLoggedIn",xhrGetUserId.responseText);
@@ -417,7 +425,8 @@ function api_tester() {
         "url": regUrl
     };
 
-    var url = "http://www.wallgetter.site/terms/" + term + "/urls/";
+    var url = host + "/terms/" + term + "/urls/";
+
 
     let response = document.getElementById("response");
 
@@ -466,7 +475,7 @@ function random_tester() {
 
     var term = document.getElementById("category").value;
 
-    var randomUrl = "http://www.wallgetter.site/terms/" + term + "/urls/random/";
+    var randomUrl = host + "/terms/" + term + "/urls/random/";
 
     xhrRandomUrl.open("GET", randomUrl, true);
 

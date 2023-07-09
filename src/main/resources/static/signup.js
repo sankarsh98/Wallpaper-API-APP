@@ -1,3 +1,4 @@
+host = "http://localhost:8081"
 
 function signup() {
 
@@ -8,7 +9,8 @@ function signup() {
 
     let error = document.getElementById("validation_error");
 
-    var signup_url = "http://www.wallgetter.site/signup/";
+    var signup_url = host  + "/signup/";
+
 
     const xhr = new XMLHttpRequest();
 
@@ -31,7 +33,8 @@ function signup() {
                 error.setAttribute("style", "display:block");
                 error.innerHTML = "<p>" + response.message + "</p>";
             }else{
-                window.location.href = "http://www.wallgetter.site/login";
+                window.location.href = host + "/login";
+
             }
         } else {
 

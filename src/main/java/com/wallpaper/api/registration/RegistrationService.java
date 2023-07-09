@@ -3,6 +3,7 @@ package com.wallpaper.api.registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.wallpaper.api.models.MyUserDetailsService;
 import com.wallpaper.api.models.User;
 import com.wallpaper.api.models.UserRepository;
 
@@ -11,6 +12,9 @@ public class RegistrationService {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    MyUserDetailsService myUserDetailsService;
 
     public RegistrationResponse signup(Registration registration) {
         RegistrationResponse registrationResponse = new RegistrationResponse();
@@ -34,7 +38,9 @@ public class RegistrationService {
             return registrationResponse;
         }
 
-        userRepository.save(user);
+        // userRepository.save(user);
+
+        myUserDetailsService.registerNewUserAccount(user);
         
         registrationResponse.setMessage("Registration successful");
         registrationResponse.setStatus(true);

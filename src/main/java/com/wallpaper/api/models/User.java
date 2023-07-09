@@ -22,6 +22,15 @@ public class User {
     private boolean active;
     private String roles;
     private String email;
+    private String resetPasswordToken;
+    
+    public String getResetPasswordToken() {
+        return resetPasswordToken;
+    }
+
+    public void setResetPasswordToken(String resetPasswordToken) {
+        this.resetPasswordToken = resetPasswordToken;
+    }
 
     public User(){
 
