@@ -1,3 +1,4 @@
+host = "http://localhost:8081"
 
 function signup() {
 
@@ -8,7 +9,7 @@ function signup() {
 
     let error = document.getElementById("validation_error");
 
-    var signup_url = "http://localhost:8081/signup/";
+    var signup_url = host  + "/signup/";
 
     const xhr = new XMLHttpRequest();
 
@@ -31,7 +32,7 @@ function signup() {
                 error.setAttribute("style", "display:block");
                 error.innerHTML = "<p>" + response.message + "</p>";
             }else{
-                window.location.href = "http://localhost:8081/login";
+                window.location.href = host + "/login";
             }
         } else {
 
